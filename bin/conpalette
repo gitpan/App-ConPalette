@@ -1,0 +1,199 @@
+#!/usr/bin/env perl
+
+package App::ConPalette;
+
+use strict;
+use warnings;
+use Getopt::Long qw(:config auto_help);
+
+our $VERSION = '0.1.0';
+
+my %palettes = (
+    'apple-ii' => [
+        '000000',
+        '7E3952',
+        '52468a',
+        'df4ef3',
+        '1e6a52',
+        '919191',
+        '36a6f3',
+        'C9C0F9',
+
+        '525e0d',
+        'DF7A19',
+        '919191',
+        'efb5c9',
+        '36cd19',
+        'c9d398',
+        'A2DDC9',
+        'FFFFFF',
+    ],
+    'commodore-64' => [
+        '000000',
+        'FFFFFF',
+        '984b43',
+        '79c1c8',
+        '9b51a5',
+        '68ae5c',
+        '52429d',
+        'c9d684',
+        
+        '9b6739',
+        '6a5400',
+        'c37b75',
+        '636363',
+        '8a8a8a',
+        'a3e599',
+        '8a7bce',
+        'adadad',
+    ],
+    'tango-dark' => [
+        '000000',
+        'CC0000',
+        '4E9A06',
+        'C4A000',
+        '3465A4',
+        '75507B',
+        '06989A',
+        'AAAAAA',
+        
+        '555753',
+        'EF2929',
+        '8AE234',
+        'FCE94F',
+        '729FCF',
+        'AD7FA8',
+        '34E2E2',
+        'EEEEEC',
+    ],
+    'tango-light' => [
+        '2E3436',
+        'CC0000',
+        '4E9A06',
+        'C4A000',
+        '3465A4',
+        '75507B',
+        '06989A',
+        
+        'D3D7CF',
+        '555753',
+        'EF2929',
+        '8AE234',
+        'FCE94F',
+        '729FCF',
+        'AD7FA8',
+        '34E2E2',
+        'EEEEEC',
+    ],
+    'vic-20' => [
+        '000000',
+        'FFFFFF',
+        '8d3e37',
+        '87d6dd',
+        'aa5fb6',
+        '55a049',
+        '40318d',
+        'bfce72',
+
+        'aa7449',
+        'eab489',
+        'b86962',
+        'c7ffff',
+        'ea9ff6',
+        '94e089',
+        '8071cc',
+        'ffffb2',
+    ],
+);
+
+GetOptions(
+    'l|list'    => \&list,
+    'r|reset'   => \my $reset,
+    's|show'    => \&show,
+    't|tty=i'   => \(my $tty = ''),
+);
+
+open(my $handle, '>', "/dev/tty$tty") or die "Can't open tty: $!; aborted";
+
+if ($reset) {
+    syswrite $handle, "\033]R";
+    exit;
+}
+
+my $name = $ARGV[0];
+die 'No palette name specified; aborted' if !defined $name;
+die 'Unknown palette name; aborted' if !exists $palettes{$name};
+
+for my $num (0..$#{ $palettes{$name} }) {
+    my $escape = sprintf("\033]P%X%s", $num, $palettes{$name}[$num]);
+    syswrite $handle, $escape;
+}
+
+exit;
+
+sub list {
+    print "$_\n" for sort keys %palettes;
+    exit
+}
+
+# straight port of a bash script
+# will make it cleaner later
+sub show {
+    my $esc = "\033[";
+
+    for my $fg (0, 7, 1..6) {
+        my $no = '';
+        my $bo = '';
+        
+        for my $bg ('n', 7, 0, 1..6) {
+            my $co = "3$fg";
+            my $p = '  ';
+            
+            if ($bg !~ /n/) {
+                $co .= ";4$bg";
+                $p = '';
+            }
+
+            $no = sprintf('%s%s%sm   %s%s %s0m', $no, $esc, $co, $p, $co, $esc);
+            $bo = sprintf('%s%s1;%sm %s1;%s %s0m', $bo, $esc, $co, $p, $co, $esc);
+        }
+        
+        print "$no\n$bo\n";
+    }
+    exit;
+}
+
+__END__
+
+=head1 NAME
+
+conpalette - Redefine a Linux console's color palette
+
+=head1 SYNOPSIS
+
+B<conpalette> [options] [palette]
+
+ Options:
+   -h, --help              Display this help message
+   -l, --list              List the available palettes
+   -r, --reset             Reset the console palette
+   -s, --show              Show the current palette
+   -t N, --tty=N           Specify a different tty
+
+=head1 DESCRIPTION
+
+This little program redefine the color palette of your Linux console using
+the escape sequences documented in L<console_codes(4)>.
+
+=head1 AUTHOR
+
+Hinrik E<Ouml>rn SigurE<eth>sson, hinrik.sig@gmail.com
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2008 Hinrik E<Ouml>rn SigurE<eth>sson
+
+This program is free software, you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

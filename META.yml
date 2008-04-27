@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                App-ConPalette
-version:             0.1.0
+version:             0.1.1
 abstract:            Redefine a Linux console's color palette
 license:             perl
 author:              
@@ -9,6 +9,7 @@ generated_by:        ExtUtils::MakeMaker version 6.42
 distribution_type:   module
 requires:     
     Getopt::Long:                  2.33
+    Pod::Usage:                    0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3

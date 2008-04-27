@@ -10,5 +10,6 @@ WriteMakefile(
     EXE_FILES     => [ 'bin/conpalette' ],
     PREREQ_PM     => {
         'Getopt::Long'  => '2.33',
+        'Pod::Usage'    => '0',
     }
 );

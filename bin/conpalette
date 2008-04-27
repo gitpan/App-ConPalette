@@ -5,8 +5,9 @@ package App::ConPalette;
 use strict;
 use warnings;
 use Getopt::Long qw(:config auto_help);
+use Pod::Usage;
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.1.1';
 
 my %palettes = (
     'apple-ii' => [
@@ -111,7 +112,7 @@ GetOptions(
     'r|reset'   => \my $reset,
     's|show'    => \&show,
     't|tty=i'   => \(my $tty = ''),
-);
+) or pod2usage();
 
 open(my $handle, '>', "/dev/tty$tty") or die "Can't open tty: $!; aborted";
 
@@ -184,6 +185,14 @@ B<conpalette> [options] [palette]
 
 This little program redefine the color palette of your Linux console using
 the escape sequences documented in L<console_codes(4)>.
+
+=head1 EXAMPLES
+
+You might put this in your F<~/.bashrc>:
+
+ if [ "$TERM" = "linux" ]; then
+     conpalette tango-dark
+ fi
 
 =head1 AUTHOR
 

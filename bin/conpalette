@@ -7,46 +7,65 @@ use warnings;
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 
-our $VERSION = '0.1.1';
+our $VERSION = '0.1.2';
 
 my %palettes = (
-    'apple-ii' => [
+    'konsole' => [
         '000000',
-        '7E3952',
-        '52468a',
-        'df4ef3',
-        '1e6a52',
-        '919191',
-        '36a6f3',
-        'C9C0F9',
+        'B21818',
+        '18B218',
+        'B26818',
+        '1818B2',
+        'B218B2',
+        '18B2B2',
+        'B2B2B2',
 
-        '525e0d',
-        'DF7A19',
-        '919191',
-        'efb5c9',
-        '36cd19',
-        'c9d398',
-        'A2DDC9',
+        '686868',
+        'FF5454',
+        '54FF54',
+        'FFFF54',
+        '5454FF',
+        'FF54FF',
+        '54FFFF',
         'FFFFFF',
     ],
-    'commodore-64' => [
+    'rxvt' => [
         '000000',
+        'CD0000',
+        '00CD00',
+        'CDCD00',
+        '0000CD',
+        'CD00CD',
+        '00CDCD',
+        'FAEBD7',
+
+        '404040',
+        'FF0000',
+        '00FF00',
+        'FFFF00',
+        '0000FF',
+        'FF00FF',
+        '00FFFF',
         'FFFFFF',
-        '984b43',
-        '79c1c8',
-        '9b51a5',
-        '68ae5c',
-        '52429d',
-        'c9d684',
-        
-        '9b6739',
-        '6a5400',
-        'c37b75',
-        '636363',
-        '8a8a8a',
-        'a3e599',
-        '8a7bce',
-        'adadad',
+    ],
+    'sinclair' => [
+        '000000',
+        'CA0000',
+        '00CA00',
+        'CACA00',
+        '0000AA',
+        'CA00CA',
+        '00CACA',
+        'CACACA',
+
+        '555555',
+        'FF0000',
+        '00FF00',
+        'FFFF00',
+        '0000FF',
+        'FF00FF',
+        '00FFFF',
+        'FFFFFF',
     ],
     'tango-dark' => [
         '000000',
@@ -86,24 +105,24 @@ my %palettes = (
         '34E2E2',
         'EEEEEC',
     ],
-    'vic-20' => [
+    'xterm' => [
         '000000',
-        'FFFFFF',
-        '8d3e37',
-        '87d6dd',
-        'aa5fb6',
-        '55a049',
-        '40318d',
-        'bfce72',
+        'CD0000',
+        '00CD00',
+        'CDCD00',
+        '1E90FF',
+        'CD00CD',
+        '00CDCD',
+        'E5E5E5',
 
-        'aa7449',
-        'eab489',
-        'b86962',
-        'c7ffff',
-        'ea9ff6',
-        '94e089',
-        '8071cc',
-        'ffffb2',
+        '4C4C4C',
+        'FF0000',
+        '00FF00',
+        'FFFF00',
+        '4682B4',
+        'FF00FF',
+        '00FFFF',
+        'FFFFFF',
     ],
 );
 
@@ -183,7 +202,7 @@ B<conpalette> [options] [palette]
 
 =head1 DESCRIPTION
 
-This little program redefine the color palette of your Linux console using
+This little program redefines the color palette of your Linux console using
 the escape sequences documented in L<console_codes(4)>.
 
 =head1 EXAMPLES

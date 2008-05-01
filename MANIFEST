@@ -3,4 +3,5 @@ MANIFEST
 INSTALL
 Changes
 bin/conpalette
+t/00-cheat.t
 META.yml                                 Module meta-data (added by MakeMaker)

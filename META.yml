@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                App-ConPalette
-version:             0.1.3
+version:             0.1.4
 abstract:            Redefine a Linux console's color palette
 license:             perl
 author:              

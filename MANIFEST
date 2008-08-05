@@ -2,6 +2,6 @@ Makefile.PL
 MANIFEST
 INSTALL
 Changes
-bin/conpalette
+script/conpalette
 t/00-cheat.t
 META.yml                                 Module meta-data (added by MakeMaker)

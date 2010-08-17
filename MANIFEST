@@ -1,7 +1,13 @@
-Makefile.PL
-MANIFEST
-INSTALL
 Changes
-script/conpalette
+LICENSE
+MANIFEST
+MANIFEST.SKIP
+META.json
+META.yml
+Makefile.PL
+README
+README.pod
+bin/conpalette
+dist.ini
 t/00-cheat.t
-META.yml                                 Module meta-data (added by MakeMaker)
+t/release-pod-syntax.t

@@ -1,0 +1,48 @@
+{
+   "abstract" : "Redefine a Linux console's color palette",
+   "author" : [
+      "Hinrik \u00c3\u0096rn Sigur\u00c3\u00b0sson <hinrik.sig@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.101612, CPAN::Meta::Converter version 2.101670",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "App-ConPalette",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "utils"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.31"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-App-ConPalette@rt.cpan.org",
+         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=App-ConPalette"
+      },
+      "homepage" : "http://search.cpan.org/dist/App-ConPalette/",
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/hinrik/app-conpalette.git",
+         "web" : "http://github.com/hinrik/app-conpalette"
+      }
+   },
+   "version" : "0.1.5",
+   "x_authority" : "cpan:HINRIK"
+}
+

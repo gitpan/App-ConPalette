@@ -6,7 +6,6 @@ META.json
 META.yml
 Makefile.PL
 README
-README.pod
 bin/conpalette
 dist.ini
 t/00-cheat.t

@@ -10,6 +10,7 @@ SYNOPSIS
        -r, --reset             Reset the console palette
        -s, --show              Show the current palette
        -t N, --tty=N           Specify a different tty
+       -c NUM:COLOR, --change  Change color(s) manually (e.g. -c 13:1E2320)
 
 DESCRIPTION
     This little program redefines the color palette of your Linux console

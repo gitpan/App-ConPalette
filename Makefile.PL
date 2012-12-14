@@ -4,27 +4,27 @@ use warnings;
 
 
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Redefine a Linux console\'s color palette',
-  'AUTHOR' => 'Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>',
-  'BUILD_REQUIRES' => {},
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+  "ABSTRACT" => "Redefine a Linux console's color palette",
+  "AUTHOR" => "Hinrik \303\226rn Sigur\303\260sson <hinrik.sig\@gmail.com>",
+  "BUILD_REQUIRES" => {},
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'App-ConPalette',
-  'EXE_FILES' => [
-    'bin/conpalette'
+  "DISTNAME" => "App-ConPalette",
+  "EXE_FILES" => [
+    "bin/conpalette"
   ],
-  'LICENSE' => 'perl',
-  'NAME' => 'App::ConPalette',
-  'PREREQ_PM' => {},
-  'VERSION' => '0.1.5',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "LICENSE" => "perl",
+  "NAME" => "App::ConPalette",
+  "PREREQ_PM" => {},
+  "VERSION" => "0.1.6",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

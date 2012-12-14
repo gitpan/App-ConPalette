@@ -2,7 +2,10 @@
 
 package App::ConPalette;
 BEGIN {
-  $App::ConPalette::VERSION = '0.1.5';
+  $App::ConPalette::AUTHORITY = 'cpan:HINRIK';
+}
+{
+  $App::ConPalette::VERSION = '0.1.6';
 }
 
 use strict;
@@ -11,6 +14,7 @@ use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 
 my %palettes = (
+    # KDE Konsole's default theme
     'konsole' => [
         '000000',
         'B21818',
@@ -30,6 +34,7 @@ my %palettes = (
         '54FFFF',
         'FFFFFF',
     ],
+    # rxvt's default theme
     'rxvt' => [
         '000000',
         'CD0000',
@@ -49,6 +54,9 @@ my %palettes = (
         '00FFFF',
         'FFFFFF',
     ],
+    # http://en.wikipedia.org/wiki/List_of_8-bit_computer_hardware_palettes#ZX_Spectrum
+    # The original palette has black listed twice so I replaced one with a
+    # dark grey color, which it was missing.
     'sinclair' => [
         '000000',
         'CA0000',
@@ -68,25 +76,7 @@ my %palettes = (
         '00FFFF',
         'FFFFFF',
     ],
-    'tango-dark' => [
-        '000000',
-        'CC0000',
-        '4E9A06',
-        'C4A000',
-        '3465A4',
-        '75507B',
-        '06989A',
-        'AAAAAA',
-        
-        '555753',
-        'EF2929',
-        '8AE234',
-        'FCE94F',
-        '729FCF',
-        'AD7FA8',
-        '34E2E2',
-        'D3D7CF',
-    ],
+    # gnome-terminal's Tango theme
     'tango-light' => [
         '2E3436',
         'CC0000',
@@ -95,7 +85,7 @@ my %palettes = (
         '3465A4',
         '75507B',
         '06989A',
-        
+
         'D3D7CF',
         '555753',
         'EF2929',
@@ -106,6 +96,27 @@ my %palettes = (
         '34E2E2',
         'EEEEEC',
     ],
+    # A dark version I made using the Tango palette.
+    'tango-dark' => [
+        '000000',
+        'CC0000',
+        '4E9A06',
+        'C4A000',
+        '3465A4',
+        '75507B',
+        '06989A',
+        'AAAAAA',
+
+        '555753',
+        'EF2929',
+        '8AE234',
+        'FCE94F',
+        '729FCF',
+        'AD7FA8',
+        '34E2E2',
+        'D3D7CF',
+    ],
+    # xterm's default theme
     'xterm' => [
         '000000',
         'CD0000',
@@ -125,13 +136,94 @@ my %palettes = (
         '00FFFF',
         'FFFFFF',
     ],
+    # http://slinky.imukuppi.org/zenburnpage/
+    # Zenburn is a 256-color theme, but I used the 16-color port found here:
+    # https://github.com/lloeki/linux-console-themes
+    'zenburn' => [
+        '1E2320',
+        '705050',
+        '60B48A',
+        'DFAF8F',
+        '506070',
+        'DC8CC3',
+        '8CD0D3',
+        'DCDCCC',
+
+        '709080',
+        'DCA3A3',
+        'C3BF9F',
+        'F0DFAF',
+        '94BFF3',
+        'EC93D3',
+        '93E0E3',
+        'FFFFFF',
+    ],
+    # http://ethanschoonover.com/solarized
+    'solarized-dark' => [
+        '073642',
+        'DC322F',
+        '719E07',
+        'B58900',
+        '268BD2',
+        'D33682',
+        '2AA198',
+        'EEE8D5',
+
+        '002B36',
+        'CB4B16',
+        '568E75',
+        '657B83',
+        '839496',
+        '6C71C4',
+        '93A1A1',
+        'FDF6E3',
+    ],
+    'solarized-dark-highcontrast' => [
+        '073642',
+        'DC322F',
+        '719E07',
+        'B58900',
+        '268BD2',
+        'D33682',
+        '2AA198',
+        'FDF6E3',
+
+        '002B36',
+        'CB4B16',
+        '657B83',
+        '839496',
+        '93A1A1',
+        '6C71C4',
+        'EEE8D5',
+        'FDF6E3',
+    ],
+    'solarized-light' => [
+        'EEE8D5',
+        'DC322F',
+        '719E07',
+        'B58900',
+        '268BD2',
+        'D33682',
+        '2AA198',
+        '073642',
+
+        'FDF6E3',
+        'CB4B16',
+        '93A1A1',
+        '839496',
+        '657B83',
+        '6C71C4',
+        '586E75',
+        '002B36',
+    ],
 );
 
 GetOptions(
-    'l|list'    => \&list,
-    'r|reset'   => \my $reset,
-    's|show'    => \&show,
-    't|tty=i'   => \(my $tty = ''),
+    'l|list'      => \&list,
+    'r|reset'     => \my $reset,
+    's|show'      => \&show,
+    't|tty=i'     => \(my $tty = ''),
+    'c|change=s@' => \(my $changes),
 ) or pod2usage();
 
 open(my $handle, '>', "/dev/tty$tty") or die "Can't open tty: $!; aborted\n";
@@ -140,14 +232,23 @@ if ($reset) {
     syswrite $handle, "\033]R";
     exit;
 }
+elsif (@$changes) {
+    for my $change (@$changes) {
+        my ($num, $color) = $change =~ /^(\d\d?):([0-9A-F]{6})$/i;
+        if (!defined $num || !defined $color) {
+            die "Malformed color change '$change'; aborted\n";
+        }
+        syswrite $handle, sprintf("\033]P%X%s", $num, $color);
+    }
+    exit;
+}
 
 my $name = $ARGV[0];
 die "No palette name specified; aborted\n" if !defined $name;
 die "Unknown palette name; aborted\n" if !exists $palettes{$name};
 
 for my $num (0..$#{ $palettes{$name} }) {
-    my $escape = sprintf("\033]P%X%s", $num, $palettes{$name}[$num]);
-    syswrite $handle, $escape;
+    syswrite $handle, sprintf("\033]P%X%s", $num, $palettes{$name}[$num]);
 }
 
 exit;
@@ -164,11 +265,11 @@ sub show {
         my $normal = '';
         my $bright = '';
         my $dim    = '';
-        
+
         for my $bg_color (undef, 7, 0, 1..6) {
             my $colors = "3$fg_color";
             my $padding = '  ';
-            
+
             if (defined $bg_color) {
                 $colors .= ";4$bg_color";
                 $padding = '';
@@ -177,9 +278,9 @@ sub show {
             $normal = sprintf('%s%s%sm   %s%s %s0m',   $normal, $esc, $colors, $padding, $colors, $esc);
             $bright = sprintf('%s%s1;%sm %s1;%s %s0m', $bright, $esc, $colors, $padding, $colors, $esc);
             $dim    = sprintf('%s%s2;%sm %s2;%s %s0m', $dim,    $esc, $colors, $padding, $colors, $esc);
-            
+
         }
-        
+
         print "$normal\n$bright\n$dim\n";
     }
     exit;
@@ -201,6 +302,7 @@ B<conpalette> [options] [palette]
    -r, --reset             Reset the console palette
    -s, --show              Show the current palette
    -t N, --tty=N           Specify a different tty
+   -c NUM:COLOR, --change  Change color(s) manually (e.g. -c 13:1E2320)
 
 =head1 DESCRIPTION
 

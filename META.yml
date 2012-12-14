@@ -4,9 +4,9 @@ author:
   - 'Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>'
 build_requires: {}
 configure_requires:
-  ExtUtils::MakeMaker: 6.31
+  ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.101612, CPAN::Meta::Converter version 2.101670'
+generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -18,8 +18,8 @@ no_index:
     - utils
 resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=App-ConPalette
-  homepage: http://search.cpan.org/dist/App-ConPalette/
+  homepage: http://metacpan.org/release/App-ConPalette
   license: http://dev.perl.org/licenses/
   repository: git://github.com/hinrik/app-conpalette.git
-version: 0.1.5
+version: 0.1.6
 x_authority: cpan:HINRIK

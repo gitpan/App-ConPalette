@@ -22,7 +22,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "App::ConPalette",
   "PREREQ_PM" => {},
-  "VERSION" => "0.1.6",
+  "VERSION" => "0.1.7",
   "test" => {
     "TESTS" => "t/*.t"
   }
